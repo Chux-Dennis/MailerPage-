@@ -13,6 +13,7 @@ const Textarea = ({ placeholder, label, width }) => {
         style={{ width: width, resize: "none" }}
         cols="20"
         className="input-box"
+        required
         rows="5"
       ></textarea>
     </div>

@@ -18,9 +18,13 @@ const Form = () => {
     { value: "230-270k", label: "230-270k" },
     { value: "270k+", label: "270k+" },
   ];
+  function submitFunc(e) {
+    const form = document.querySelector(".form");
+    console.log(form);
+  }
   return (
     <div className="mt-[20px]">
-      <form action="/submitform" method="post">
+      <form action="/submitform" className="form" method="post">
         <div className="name-email flex xs:flex-col sm:flex-row w-full gap-3">
           <InputBox
             label="Your Name"

@@ -1,29 +1,22 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const ejs = require("ejs");
 const nodemailer = require("nodemailer");
+const dotenv = require("dotenv");
 
-const app = express();
-app.set("view engine", "ejs");
+dotenv.config();
 
-app.get("/jump", (req, res) => {
-  // Replace with your email service credentials
+const pushmessage = function (username, email, interest, budget, message) {
   const transporter = nodemailer.createTransport({
     service: "gmail", // or 'hotmail', 'yahoo', etc.
     auth: {
-      user: "friendlydennis63@gmail.com",
-      pass: "hjwupktwyponxkya",
+      user: process.env.AUTH_USER, //receiver's address
+      pass: process.env.AUTH_PASS, // receiver pass
     },
   });
 
   const mailOptions = {
     from: "you <your_email@example.com>",
-    to: "chuksabosi63@gmail.com",
-    subject: "Sending an email with Nodemailer",
-    text: "My name is Chukwuemeka Abosi Dennis.",
-    // text: `Name: ${firstName}\nEmail: ${email}\nComment: ${message}`,
-
-    // html: "<sm>This is the HTML body of the email.</sm>", // Optional for HTML content
+    to: process.env.REC_ADDRESS, //receiver address
+    subject: `Message from ${username} from your Contact Page`,
+    text: `Name: ${username}\nEmail: ${email}\nInterest: ${interest}\nBudget: ${budget}\nComment: ${message}`,
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
@@ -33,12 +26,6 @@ app.get("/jump", (req, res) => {
       console.log("Email sent: " + info.response);
     }
   });
-});
+};
 
-app.get("/", (req, res) => {
-  res.sendFile("");
-});
-
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});
+module.exports = pushmessage;
